@@ -6,13 +6,15 @@ import express from 'express'
 import {
     fetchMoviesController,
     fetchMovieByIdController,
-    addMovieController
+    addMovieController,
+    fetchMoviePosterController
 } from '../controllers/movieDetails.js'
 
 //importing the movie details validators
 import {
     fetchMovieByIdValidator,
-    addMovieValidator
+    addMovieValidator,
+    fetchMoviePosterValidator
 } from '../validators/movieDetails.js'
 
 const upload = multer({ dest: 'uploads/' })
@@ -27,6 +29,10 @@ router.get('/by/movieId',fetchMovieByIdValidator,  fetchMovieByIdController)
 
 //route to fetch the movies
 router.get('/all',  fetchMoviesController)
+
+//route to fetch the movie poster
+router.get('/poster', fetchMoviePosterValidator, fetchMoviePosterController)
+
 
 export default router
 

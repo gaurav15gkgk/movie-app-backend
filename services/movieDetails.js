@@ -1,3 +1,7 @@
+//importing the libraries
+import fs from 'fs'
+import util from 'util'
+
 //importing movie details repository
 import {
     addMovie,
@@ -7,8 +11,11 @@ import {
 
 //importing the util for uploading file to s3
 import {
-    uploadFile
+    uploadFile,
+    getFile
 } from '../utils/s3.js'
+
+const unlinkSync = util.promisify(fs.unlink)
 
 // service to fetch movie 
 export const fetchMoviesService = async() =>{
@@ -44,11 +51,29 @@ export const addMovieService = async(movieName, movieDescription, releaseDate, f
             const moviePoster = await uploadFile(file)
             const newMovie = await addMovie(movieName, movieDescription, 
                 releaseDate, moviePoster.Key, trailerLink, language, genres)
+            
+            await unlinkSync(file.path)
             return resolve(newMovie)
 
         } catch (error) {
             console.error(error)
             return reject(error)
+        }
+    })
+}
+
+export const fetchMoviePosterService = async(key) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const moviePosterFileStream = await getFile(key)
+            return resolve(moviePosterFileStream)
+        } catch (error) {
+            console.error(error)
+            return reject({
+                code : 500,
+                data : null,
+                msg : "Internal server error"
+            })
         }
     })
 }

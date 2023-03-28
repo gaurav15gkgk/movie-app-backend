@@ -4,10 +4,12 @@ import {
     makeInvalidParametersString
 } from '../utils/parameterValidators.js'
 
+//importing the common regex 
 import {
     mongoObjectIdRegex
 } from '../utils/commonRegex.js'
 
+//validator for fetch movie by movieID
 export const fetchMovieByIdValidator = (req, res, next) => {
     const validParameters = [
         {
@@ -30,8 +32,9 @@ export const fetchMovieByIdValidator = (req, res, next) => {
     next()
 }
 
+//validator for add movie
 export const addMovieValidator = (req, res, next) => {
-    const validParameters = [
+    let validParameters = [
         {
             parameter: 'movieName',
             type: 'string',
@@ -71,7 +74,7 @@ export const addMovieValidator = (req, res, next) => {
 
     ]
 
-    const inValidParameters = parameterValidators(validParameters, req.body)
+    let inValidParameters = parameterValidators(validParameters, req.body)
        
     if(inValidParameters.length > 0){
         const inValidParametersString = makeInvalidParametersString(inValidParameters)
@@ -84,7 +87,7 @@ export const addMovieValidator = (req, res, next) => {
         {
             parameter: 'file',
             type: 'object',
-            expressionType: 'file',
+            expressionType: 'typeof',
             validExpression: ''
         }
     ]
@@ -102,4 +105,27 @@ export const addMovieValidator = (req, res, next) => {
 
     next()
 
+}
+
+//validator for fetch movie poster
+export const fetchMoviePosterValidator = (req, res, next) => {
+    const validParameters = [
+        {
+            parameter: 'posterKey',
+            type: 'string',
+            expressionType: 'typeof',
+            validExpression: ''
+        }
+    ]
+
+    const inValidParameters = parameterValidators(validParameters, req.query)
+       
+    if(inValidParameters.length > 0){
+        const inValidParametersString = makeInvalidParametersString(inValidParameters)
+        return res.status(400).json({
+            "error": `${inValidParametersString}`
+        })
+    }
+
+    next()
 }

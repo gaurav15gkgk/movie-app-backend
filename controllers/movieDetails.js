@@ -2,7 +2,8 @@
 import {
     fetchMovieByIdService,
     fetchMoviesService,
-    addMovieService
+    addMovieService,
+    fetchMoviePosterService
 } from '../services/movieDetails.js'
 
 //fetch movies controller
@@ -45,15 +46,29 @@ export const fetchMovieByIdController = async(req, res) => {
 //add movie Controller
 export const addMovieController = async(req, res) => {
     try {
-        const { movieName, movieDescription, releaseDate, trailerLink, language, genres} = req.body
+        const { movieName, movieDescription, releaseDate, trailerLink, language, movieGenres} = req.body
         const file = req.file
-        const newMovie = await addMovieService(movieName, movieDescription, releaseDate, file, trailerLink, language, genres)
+        const newMovie = await addMovieService(movieName, movieDescription, releaseDate, file, trailerLink, language, movieGenres)
 
         const { code, data, msg } = newMovie
         return res.status(code).json({
             data,
             msg
         })
+    } catch (error) {
+        console.error(error)
+        return res.status(error.code ? error.code : 500).json({
+            data : null,
+            msg : error.msg ? error.msg : `Internal Server Error`
+        })
+    }
+}
+
+//fetch movie poster
+export const fetchMoviePosterController = async(req, res) => {
+    try {
+        const fetchMoviePosterStream = await fetchMoviePosterService(req.query.posterKey)
+        fetchMoviePosterStream.pipe(res)
     } catch (error) {
         console.error(error)
         return res.status(error.code ? error.code : 500).json({
