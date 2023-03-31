@@ -7,6 +7,7 @@ export const fetchMovies = async() => {
         try {
             const movies = await MovieDetails.find()
                                     .select('_id moviePosterLink movieName movieDescription releaseDate')
+                                    .sort({updatedAt: -1})
             return resolve({
                 code : 200,
                 data : movies,
