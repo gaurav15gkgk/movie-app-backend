@@ -47,9 +47,9 @@
         
 
 #### Project Setup
-1. Clone this repo
-2. Create an .env file 
-3. Create an aws account and create a S3 bucket and give it a private access and then make a contract so that we can read and write the objects of the image and then create an user through IAM panel and enforce that contract
+1. Clone this repo.
+2. Create an .env file. 
+3. Create an aws account and create a S3 bucket and give it a private access and then make a contract so that we can read and write the objects of the image and then create an user through IAM panel and enforce that contract.
 
 4. Create the following environment variables
    1. MONGODB_URI : MongoDB connection string
@@ -59,3 +59,20 @@
    5. AWS_S3_BUCKET_NAME : Specify the aws s3 bucket name
    6. AWS_S3_BUCKET_REGION : Specify the aws s3 bucket region
 5. Open the terminal and run server.js file with the command node server.js
+
+#### Thought Process while building the application
+1. To store the movie details we have to design the schema and stored the basic details like trailer, movie poster, movie name, movie description, movie release date and genre.
+2. For storing trailer I have to get the embed url of the youtube video so i stored the unique video Id of the youtube video as the template is same.
+3. I have to store images so I have to use a storage bucket so that it can store and provide the image also. I have used AWS S3 for this.
+4. I have used ES6 syntax as its the latest syntax of Js.
+5. I have divided whole project into several folders such that its easy to understand.
+6. Routes : Its the endpoints of the api and all the request come at this folder.
+7. Validators : It validates all the requests and ensure that the request is valid and if the request is invalid it gives the user friendly error for the client.
+8. Controllers : At this point request has been verified and its a valid request and we have to give the valid response so it extracts all the parameters from the request and call the specific api service.
+9. Services: It provide all the business logic which is used in the app.
+10. Repository: This is the only api part that interacts with DB.
+11. Utils : These are the different util functions needed in the app like validation , third party service like aws s3 etc.
+12. Models : It contain all the Schema used to store the data in the db. 
+
+#### Future Scope
+1. We can add pagination in order to cater a large movie data.
