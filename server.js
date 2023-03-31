@@ -3,6 +3,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import morgan from 'morgan';
+import cors from 'cors'
 
 //importing movie routes
 import movieRoutes from './routes/movieDetails.js'
@@ -11,6 +12,7 @@ const app = express()
 dotenv.config();
 
 app.use(morgan('tiny'))
+app.use(cors())
 
 
 app.use(express.json());

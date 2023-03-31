@@ -6,7 +6,7 @@ export const fetchMovies = async() => {
     return new Promise(async(resolve, reject) => {
         try {
             const movies = await MovieDetails.find()
-                                    .select('_id movieName movieDescription releaseDate moviePosterLink')
+                                    .select('_id moviePosterLink movieName movieDescription releaseDate')
             return resolve({
                 code : 200,
                 data : movies,
