@@ -1,5 +1,7 @@
 # Movies App Backend
 
+**This app is backend of a movie app which shows all the trending movie and thier basic details which includes trailer, movie poster, movie name, movie description, movie release date and genre.**
+
 ## Folder structure
 ![](./resources/folderStructure.png)
 
