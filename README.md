@@ -77,4 +77,4 @@
 
 #### Future Scope
 1. We can add pagination in order to cater a large movie data.
->>>>>>> ab390abbd43b74e900e5d69e81a814007444d9d8
+
